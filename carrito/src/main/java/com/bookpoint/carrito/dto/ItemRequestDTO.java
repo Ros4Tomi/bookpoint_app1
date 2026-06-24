@@ -1,0 +1,20 @@
+package com.bookpoint.carrito.dto;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ItemRequestDTO {
+
+    @NotNull(message = "El ID del libro es requerido")
+    private Long libroId;
+
+    @NotNull(message = "La cantidad es requerida")
+    @Min(value = 1, message = "La cantidad mínima a agregar debe ser 1")
+    private Integer cantidad;
+}
