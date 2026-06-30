@@ -4,21 +4,15 @@ server:
 spring:
   application:
     name: ms-carrito
-  
-  # Configuración de Base de Datos H2
   datasource:
-    url: jdbc:h2:mem:carritodb;DB_CLOSE_DELAY=-1;NOT_FIXED=TRUE
+    url: jdbc:h2:mem:carritodb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: sa
     password: 
-  
-  # Habilitar consola web H2
   h2:
     console:
       enabled: true
       path: /h2-console
-  
-  # Configuración de JPA / Hibernate
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
