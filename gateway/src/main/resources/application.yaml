@@ -1,0 +1,68 @@
+server:
+  port: 8080 
+
+spring:
+  application:
+    name: ms-gateway
+  cloud:
+    gateway:
+      routes:
+        # 1. Microservicio de Usuarios
+        - id: ms-usuarios
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/usuarios/**
+
+        # 2. Microservicio de Catálogo (Libros)
+        - id: ms-catalogo
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/libros/**
+
+        # 3. Microservicio de Facturación
+        - id: ms-facturacion
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/facturas/**
+
+        # 4. Microservicio de Inventario
+        - id: ms-inventario
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/inventario/**
+
+        # 5. Microservicio de Carrito de Compras
+        - id: ms-carrito
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/carritos/**
+
+        # 6. Microservicio de Logística (Envíos)
+        - id: ms-logistica
+          uri: http://localhost:8086
+          predicates:
+            - Path=/api/logistica/**
+
+        # 7. Microservicio de Promociones (Cupones)
+        - id: ms-promociones
+          uri: http://localhost:8087
+          predicates:
+            - Path=/api/promociones/**
+
+        # 8. Microservicio de Reseñas y Valoraciones
+        - id: ms-resenas
+          uri: http://localhost:8088
+          predicates:
+            - Path=/api/resenas/**
+
+        # 9. Microservicio de Pagos (Pasarela)
+        - id: ms-pagos
+          uri: http://localhost:8089
+          predicates:
+            - Path=/api/pagos/**
+
+        # 10. Microservicio de Ventas (Transacciones globales)
+        - id: ms-ventas
+          uri: http://localhost:8090
+          predicates:
+            - Path=/api/ventas/**
