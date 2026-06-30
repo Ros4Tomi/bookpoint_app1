@@ -1,7 +1,7 @@
 package com.bookpoint.facturacion.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +10,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FacturaRequestDTO {
-
-    @NotNull(message = "El ID de la venta es requerido")
+    @NotNull(message = "El ID de venta es obligatorio")
     private Long ventaId;
+    
+    @NotNull(message = "El ID de usuario es obligatorio")
+    private Long usuarioId;
 
-    @NotNull(message = "El monto subtotal es requerido")
-    @Positive(message = "El subtotal debe ser un valor positivo")
-    private Double subtotal;
+    @NotBlank(message = "La dirección de despacho es obligatoria")
+    private String direccionDespacho;
+
+    @NotBlank(message = "La comuna es obligatoria")
+    private String comuna;
+
+    @NotBlank(message = "La región es obligatoria")
+    private String region;
+
+    @NotBlank(message = "El método de pago es obligatorio (E.g. WEBPAY)")
+    private String metodoPago;
+
+    private String codigoPromocional; 
 }

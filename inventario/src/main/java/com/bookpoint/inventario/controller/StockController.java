@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,9 +63,12 @@ public class StockController {
         return ResponseEntity.ok(stockService.adicionarUnidades(libroId, cantidad));
     }
 
-    @PatchMapping("/libro/{libroId}/deducir")
-    public ResponseEntity<StockResponseDTO> sustraerUnidades(@PathVariable Long libroId, @RequestParam Integer cantidad) {
-        return ResponseEntity.ok(stockService.deducirUnidades(libroId, cantidad));
+    // Cambiado a @PutMapping para alinearse al cliente Feign y retornar solo el estatus OK esperado
+    @PutMapping("/libro/{libroId}/descontar")
+    public ResponseEntity<Void> sustraerUnidades(@PathVariable Long libroId, @RequestParam Integer cantidad) {
+        log.info("Feign-Call -> Solicitud de descuento en Inventario para Libro ID: {}, Cantidad: {}", libroId, cantidad);
+        stockService.deducirUnidades(libroId, cantidad);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/libro/{libroId}/ubicacion")

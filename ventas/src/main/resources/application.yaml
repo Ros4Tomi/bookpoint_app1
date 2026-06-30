@@ -1,3 +1,18 @@
+server:
+  port: 8090
+
 spring:
   application:
-    name: ventas
+    name: ms-ventas
+  datasource:
+    url: jdbc:h2:mem:ventasdb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

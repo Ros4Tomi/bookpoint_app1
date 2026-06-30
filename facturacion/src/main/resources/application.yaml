@@ -1,3 +1,14 @@
+server:
+  port: 8083
+
 spring:
   application:
-    name: facturacion
+    name: ms-facturacion
+  datasource:
+    url: jdbc:h2:mem:facturaciondb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true

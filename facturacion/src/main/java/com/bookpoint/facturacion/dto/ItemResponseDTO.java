@@ -1,4 +1,4 @@
-package com.bookpoint.carrito.dto;
+package com.bookpoint.facturacion.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

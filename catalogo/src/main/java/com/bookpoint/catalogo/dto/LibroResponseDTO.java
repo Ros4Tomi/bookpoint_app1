@@ -22,5 +22,6 @@ public class LibroResponseDTO {
     private Categoria categoria;
     private String descripcion;
     private Boolean disponible;
+    private Integer stock;   
     private LocalDateTime fechaCreacion;
 }
