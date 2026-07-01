@@ -6,63 +6,150 @@ spring:
     name: ms-gateway
   cloud:
     gateway:
-      routes:
-        # 1. Microservicio de Usuarios
-        - id: ms-usuarios
-          uri: http://localhost:8081
-          predicates:
-            - Path=/api/usuarios/**
+      mvc:  # <-- ¡AQUÍ ESTÁ LA MAGIA! Esto activa las rutas para tu dependencia WebMVC
+        routes:
+          # === 1. USUARIOS ===
+          - id: ms-usuarios
+            uri: http://localhost:8081
+            predicates:
+              - Path=/api/usuarios/**
+          - id: ms-usuarios-docs
+            uri: http://localhost:8081
+            predicates:
+              - Path=/docs/ms-usuarios/**, /docs/ms-usuarios
+            filters:
+              - RewritePath=/docs/ms-usuarios(?<segment>.*), /v3/api-docs$\{segment}
 
-        # 2. Microservicio de Catálogo (Libros)
-        - id: ms-catalogo
-          uri: http://localhost:8082
-          predicates:
-            - Path=/api/libros/**
+          # === 2. CATALOGO ===
+          - id: ms-catalogo
+            uri: http://localhost:8082
+            predicates:
+              - Path=/api/libros/**
+          - id: ms-catalogo-docs
+            uri: http://localhost:8082
+            predicates:
+              - Path=/docs/ms-catalogo/**, /docs/ms-catalogo
+            filters:
+              - RewritePath=/docs/ms-catalogo(?<segment>.*), /v3/api-docs$\{segment}
 
-        # 3. Microservicio de Facturación
-        - id: ms-facturacion
-          uri: http://localhost:8083
-          predicates:
-            - Path=/api/facturas/**
+          # === 3. FACTURACION ===
+          - id: ms-facturacion
+            uri: http://localhost:8083
+            predicates:
+              - Path=/api/facturas/**
+          - id: ms-facturacion-docs
+            uri: http://localhost:8083
+            predicates:
+              - Path=/docs/ms-facturacion/**, /docs/ms-facturacion
+            filters:
+              - RewritePath=/docs/ms-facturacion(?<segment>.*), /v3/api-docs$\{segment}
 
-        # 4. Microservicio de Inventario
-        - id: ms-inventario
-          uri: http://localhost:8084
-          predicates:
-            - Path=/api/inventario/**
+          # === 4. INVENTARIO ===
+          - id: ms-inventario
+            uri: http://localhost:8084
+            predicates:
+              - Path=/api/inventario/**
+          - id: ms-inventario-docs
+            uri: http://localhost:8084
+            predicates:
+              - Path=/docs/ms-inventario/**, /docs/ms-inventario
+            filters:
+              - RewritePath=/docs/ms-inventario(?<segment>.*), /v3/api-docs$\{segment}
 
-        # 5. Microservicio de Carrito de Compras
-        - id: ms-carrito
-          uri: http://localhost:8085
-          predicates:
-            - Path=/api/carritos/**
+          # === 5. CARRITO ===
+          - id: ms-carrito
+            uri: http://localhost:8085
+            predicates:
+              - Path=/api/carritos/**
+          - id: ms-carrito-docs
+            uri: http://localhost:8085
+            predicates:
+              - Path=/docs/ms-carrito/**, /docs/ms-carrito
+            filters:
+              - RewritePath=/docs/ms-carrito(?<segment>.*), /v3/api-docs$\{segment}
 
-        # 6. Microservicio de Logística (Envíos)
-        - id: ms-logistica
-          uri: http://localhost:8086
-          predicates:
-            - Path=/api/logistica/**
+          # === 6. LOGISTICA ===
+          - id: ms-logistica
+            uri: http://localhost:8086
+            predicates:
+              - Path=/api/logistica/**
+          - id: ms-logistica-docs
+            uri: http://localhost:8086
+            predicates:
+              - Path=/docs/ms-logistica/**, /docs/ms-logistica
+            filters:
+              - RewritePath=/docs/ms-logistica(?<segment>.*), /v3/api-docs$\{segment}
 
-        # 7. Microservicio de Promociones (Cupones)
-        - id: ms-promociones
-          uri: http://localhost:8087
-          predicates:
-            - Path=/api/promociones/**
+          # === 7. PROMOCIONES ===
+          - id: ms-promociones
+            uri: http://localhost:8087
+            predicates:
+              - Path=/api/promociones/**
+          - id: ms-promociones-docs
+            uri: http://localhost:8087
+            predicates:
+              - Path=/docs/ms-promociones/**, /docs/ms-promociones
+            filters:
+              - RewritePath=/docs/ms-promociones(?<segment>.*), /v3/api-docs$\{segment}
 
-        # 8. Microservicio de Reseñas y Valoraciones
-        - id: ms-resenas
-          uri: http://localhost:8088
-          predicates:
-            - Path=/api/resenas/**
+          # === 8. RESENAS ===
+          - id: ms-resenas
+            uri: http://localhost:8088
+            predicates:
+              - Path=/api/resenas/**
+          - id: ms-resenas-docs
+            uri: http://localhost:8088
+            predicates:
+              - Path=/docs/ms-resenas/**, /docs/ms-resenas
+            filters:
+              - RewritePath=/docs/ms-resenas(?<segment>.*), /v3/api-docs$\{segment}
 
-        # 9. Microservicio de Pagos (Pasarela)
-        - id: ms-pagos
-          uri: http://localhost:8089
-          predicates:
-            - Path=/api/pagos/**
+          # === 9. PAGOS ===
+          - id: ms-pagos
+            uri: http://localhost:8089
+            predicates:
+              - Path=/api/pagos/**
+          - id: ms-pagos-docs
+            uri: http://localhost:8089
+            predicates:
+              - Path=/docs/ms-pagos/**, /docs/ms-pagos
+            filters:
+              - RewritePath=/docs/ms-pagos(?<segment>.*), /v3/api-docs$\{segment}
 
-        # 10. Microservicio de Ventas (Transacciones globales)
-        - id: ms-ventas
-          uri: http://localhost:8090
-          predicates:
-            - Path=/api/ventas/**
+          # === 10. VENTAS ===
+          - id: ms-ventas
+            uri: http://localhost:8090
+            predicates:
+              - Path=/api/ventas/**
+          - id: ms-ventas-docs
+            uri: http://localhost:8090
+            predicates:
+              - Path=/docs/ms-ventas/**, /docs/ms-ventas
+            filters:
+              - RewritePath=/docs/ms-ventas(?<segment>.*), /v3/api-docs$\{segment}
+
+# Configuración de consolidación de interfaces
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: "1. Microservicio Usuarios"
+        url: /docs/ms-usuarios
+      - name: "2. Microservicio Catalogo"
+        url: /docs/ms-catalogo
+      - name: "3. Microservicio Facturacion"
+        url: /docs/ms-facturacion
+      - name: "4. Microservicio Inventario"
+        url: /docs/ms-inventario
+      - name: "5. Microservicio Carrito"
+        url: /docs/ms-carrito
+      - name: "6. Microservicio Logistica"
+        url: /docs/ms-logistica
+      - name: "7. Microservicio Promociones"
+        url: /docs/ms-promociones
+      - name: "8. Microservicio Resenas"
+        url: /docs/ms-resenas
+      - name: "9. Microservicio Pagos"
+        url: /docs/ms-pagos
+      - name: "10. Microservicio Ventas"
+        url: /docs/ms-ventas

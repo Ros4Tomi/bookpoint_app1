@@ -3,38 +3,34 @@ package com.bookpoint.gateway.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class CorsConfig {
 
     @Bean
-    public CorsWebFilter corsWebFilter() {
-        CorsConfiguration corsConfig = new CorsConfiguration();
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
         
-        // 1. Permite peticiones desde cualquier origen (esencial para desarrollo local)
-        // Si tienes la URL exacta de tu frontend (ej. http://localhost:4200), puedes usar .addAllowedOrigin("http://localhost:4200")
-        corsConfig.addAllowedOriginPattern("*");
+        // Permitir credenciales (cookies, headers de autenticación)
+        config.setAllowCredentials(true);
         
-        // 2. Permite los métodos HTTP estándar que utilizan tus microservicios de Bookpoint
-        corsConfig.addAllowedMethod("GET");
-        corsConfig.addAllowedMethod("POST");
-        corsConfig.addAllowedMethod("PUT");
-        corsConfig.addAllowedMethod("DELETE");
-        corsConfig.addAllowedMethod("PATCH");
-        corsConfig.addAllowedMethod("OPTIONS");
+        // Permitir cualquier origen de desarrollo (ej. Angular, React, Vue o Postman)
+        // Si tienes un puerto específico de frontend, puedes ponerlo aquí, ej: "http://localhost:5173"
+        config.addAllowedOriginPattern("*"); 
         
-        // 3. Permite todas las cabeceras HTTP (Headers) en las peticiones (como Content-Type, Authorization, etc.)
-        corsConfig.addAllowedHeader("*");
+        // Permitir todos los Headers cotidianos
+        config.addAllowedHeader("*");
         
-        // 4. Permite el envío de credenciales, cookies o cabeceras de autenticación si fuera necesario
-        corsConfig.setAllowCredentials(true);
+        // Permitir todos los métodos HTTP (GET, POST, PUT, DELETE, PATCH, OPTIONS)
+        config.addAllowedMethod("*");
 
-        // 5. Aplica esta configuración de seguridad a absolutamente todas las rutas que crucen por el Gateway (/**)
+        // Registrar la configuración para todas las rutas del Gateway
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfig);
+        source.registerCorsConfiguration("/**", config);
 
-        return new CorsWebFilter(source);
+        // Retornamos el CorsFilter estándar de WebMVC (NO el CorsWebFilter reactivo)
+        return new CorsFilter(source);
     }
 }
